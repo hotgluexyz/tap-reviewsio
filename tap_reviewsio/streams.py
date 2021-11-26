@@ -1,9 +1,8 @@
 """Stream type classes for tap-reviewsio."""
 
 from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
 
-from singer_sdk import typing as th  # JSON Schema typing helpers
+from singer_sdk import typing as th
 
 from tap_reviewsio.client import reviewsioStream
 
@@ -14,6 +13,8 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
 class MerchantReviews(reviewsioStream):
+    """Merchant Reviews Stream."""
+
     name = "merchant_reviews"
     path = "merchant/reviews"
     primary_keys = ["store_review_id"]
@@ -68,6 +69,8 @@ class MerchantReviews(reviewsioStream):
 
 
 class ProductReviews(reviewsioStream):
+    """Product Reviews Stream."""
+
     name = "product_reviews"
     path = "product/reviews/all"
     primary_keys = ["product_review_id"]

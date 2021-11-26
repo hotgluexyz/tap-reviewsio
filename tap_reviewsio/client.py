@@ -2,9 +2,7 @@
 
 import requests
 from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
-
-from memoization import cached
+from typing import Any, Dict, Optional, Iterable
 
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
@@ -32,10 +30,7 @@ class reviewsioStream(RESTStream):
     def authenticator(self) -> APIKeyAuthenticator:
         """Return a new authenticator object."""
         return APIKeyAuthenticator.create_for_stream(
-            self,
-            key="apikey",
-            value=self.config.get("apikey"),
-            location="header"
+            self, key="apikey", value=self.config.get("apikey"), location="header"
         )
 
     @property
