@@ -84,7 +84,7 @@ class ProductReviews(reviewsioStream):
         th.Property("review", th.StringType),
         th.Property("rating", th.IntegerType),
         th.Property("date_created", th.DateTimeType),
-        th.Property("votes", th.StringType),
+        th.Property("votes", th.IntegerType),
         th.Property("timeago", th.StringType),
         th.Property("product", th.StringType),
         th.Property(
