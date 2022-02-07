@@ -23,6 +23,7 @@ class MerchantReviews(reviewsioStream):
     # Optionally, you may also use `schema_filepath` in place of `schema`:
     # schema_filepath = SCHEMAS_DIR / "users.json"
     schema = th.PropertiesList(
+        th.Property("store_review_id", th.IntegerType),
         th.Property("title", th.StringType),
         th.Property("comments", th.StringType),
         th.Property("date_created", th.DateTimeType),
@@ -52,19 +53,34 @@ class MerchantReviews(reviewsioStream):
                 ),
             ),
         ),
+        th.Property("branch",
+            th.ObjectType(
+                th.Property("name", th.StringType),
+                th.Property("description", th.StringType),
+                th.Property("image", th.StringType),
+            ),
+        ),
+        th.Property("images", th.CustomType({"type": ["array", "string"]})),
         th.Property(
-            "branch",
+            "tags",
             th.ArrayType(
                 th.ObjectType(
-                    th.Property("name", th.StringType),
-                    th.Property("description", th.StringType),
-                    th.Property("image", th.StringType),
+                    th.Property("tag", th.StringType),
                 ),
             ),
         ),
-        # th.Property("images", th.ArrayType),
-        # th.Property("tags", th.ArrayType),
-        # th.Property("replies", th.ArrayType),
+        th.Property(
+            "replies",
+            th.ArrayType(
+                th.ObjectType(
+                    th.Property("user_id", th.IntegerType),
+                    th.Property("store_review_id", th.IntegerType),
+                    th.Property("comments", th.StringType),
+                    th.Property("user_type", th.StringType),
+                    th.Property("date_created", th.DateTimeType),
+                ),
+            ),
+        )
     ).to_dict()
 
 
@@ -77,6 +93,7 @@ class ProductReviews(reviewsioStream):
     replication_key = None
     records_jsonpath = "$.reviews[*]"
     schema = th.PropertiesList(
+        th.Property("product_review_id", th.IntegerType),
         th.Property("product_make", th.StringType),
         th.Property("order_id", th.StringType),
         th.Property("name", th.StringType),
