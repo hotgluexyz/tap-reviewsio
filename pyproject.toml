@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tap-reviewsio"
-version = "0.0.2"
+version = "0.0.3"
 description = "`tap-reviewsio` is a Singer tap for reviewsio, built with the Meltano SDK for Singer Taps."
 authors = ["hotglue"]
 keywords = [
