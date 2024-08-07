@@ -6,11 +6,6 @@ from singer_sdk import typing as th
 
 from tap_reviewsio.client import reviewsioStream
 
-# TODO: Delete this is if not using json files for schema definition
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-# TODO: - Override `UsersStream` and `GroupsStream` with your own stream definition.
-#       - Copy-paste as many times as needed to create multiple stream types.
-
 
 class MerchantReviews(reviewsioStream):
     """Merchant Reviews Stream."""
@@ -20,8 +15,7 @@ class MerchantReviews(reviewsioStream):
     primary_keys = ["store_review_id"]
     replication_key = None
     records_jsonpath = "$.reviews[*]"
-    # Optionally, you may also use `schema_filepath` in place of `schema`:
-    # schema_filepath = SCHEMAS_DIR / "users.json"
+
     schema = th.PropertiesList(
         th.Property("store_review_id", th.IntegerType),
         th.Property("title", th.StringType),
