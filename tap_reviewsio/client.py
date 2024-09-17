@@ -2,9 +2,8 @@
 
 import requests
 from pathlib import Path
-from typing import Any, Dict, Optional, Iterable
+from typing import Any, Dict, Optional
 
-from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import APIKeyAuthenticator
 
@@ -12,7 +11,7 @@ from singer_sdk.authenticators import APIKeyAuthenticator
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
-class reviewsioStream(RESTStream):
+class ReviewsioStream(RESTStream):
     """reviewsio stream class."""
 
     url_base = "https://api.reviews.co.uk/"
@@ -55,7 +54,9 @@ class reviewsioStream(RESTStream):
         if next_page_token:
             params["page"] = next_page_token
         if self.replication_key:
-            params["sort"] = "asc"
-            params["order_by"] = self.replication_key
+            params["sort"] = "date_asc"
+            params["dateFrom"] = self.replication_key
+        params["type"] = self.review_type
         return params
+
 

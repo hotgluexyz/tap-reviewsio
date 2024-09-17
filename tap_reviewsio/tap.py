@@ -5,10 +5,10 @@ from typing import List
 from singer_sdk import Tap, Stream
 from singer_sdk import typing as th  # JSON schema typing helpers
 
-from tap_reviewsio.streams import ProductReviews, MerchantReviews
+from tap_reviewsio.streams import CompanyReviewsStream, ProductReviewsStream
 
 #       OR rewrite discover_streams() below with your custom logic.
-STREAM_TYPES = [ProductReviews, MerchantReviews]
+STREAM_TYPES = [CompanyReviewsStream, ProductReviewsStream]
 
 
 class TapReviewsio(Tap):
