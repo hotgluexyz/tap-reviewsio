@@ -57,6 +57,8 @@ filters_object = th.ObjectType(
     th.Property("attributes", th.ArrayType(filterable_review_attrs)),
 )
 review_properties = [
+    th.Property("id", th.StringType),
+    th.Property("order_id", th.StringType),
     th.Property("type", th.StringType),
     th.Property("type_label", th.StringType),
     th.Property("source", th.StringType),
@@ -82,6 +84,10 @@ review_properties = [
     th.Property("verdict", th.StringType),
     th.Property("store_name", th.StringType),
     th.Property("filters", filters_object),
+    th.Property("nps", th.IntegerType),
+    th.Property("product_name", th.StringType),
+    th.Property("store_branch", th.StringType),
+    th.Property("photos_raw", th.ArrayType(th.StringType)),
 ]
 review_object = th.ObjectType(
     *review_properties

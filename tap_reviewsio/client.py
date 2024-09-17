@@ -17,6 +17,7 @@ class ReviewsioStream(RESTStream):
     url_base = "https://api.reviews.co.uk/"
 
     records_jsonpath = "$[*]"
+    per_page = 100
 
     @property
     def authenticator(self) -> APIKeyAuthenticator:
@@ -40,8 +41,8 @@ class ReviewsioStream(RESTStream):
     ) -> Optional[Any]:
         """Return a token for identifying next page or None if no more pages."""
         res_json = response.json()
-        previous_token = previous_token or 0
-        if res_json.get("total_pages", 1) > (previous_token + 1):
+        previous_token = previous_token or 1
+        if len(res_json.get('reviews', [])) == self.per_page:
             next_page_token = previous_token + 1
             return next_page_token
 
@@ -50,9 +51,11 @@ class ReviewsioStream(RESTStream):
     ) -> Dict[str, Any]:
         """Return a dictionary of values to be used in URL parameterization."""
         params: dict = {}
-        params["per_page"] = 100
+        params["per_page"] = self.per_page
         if next_page_token:
             params["page"] = next_page_token
+        elif next_page_token == 0:
+            params["page"] = 1
         if self.replication_key:
             params["sort"] = "date_asc"
             params["dateFrom"] = self.replication_key
